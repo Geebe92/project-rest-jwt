@@ -36,7 +36,7 @@ public class ProjektServiceImpl implements ProjektService{
     public void deleteProjekt(Integer projektId){
         for(Zadanie zadanie : zadanieRepository.findZadaniaProjektu(projektId)){
             zadanieRepository.delete((zadanie));
-        }aaa
+        }
         projektRepository.deleteById(projektId);
     }
 
