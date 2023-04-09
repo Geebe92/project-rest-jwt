@@ -4,6 +4,7 @@ import com.project.rest.model.Projekt;
 import com.project.rest.model.Zadanie;
 import com.project.rest.repository.ProjektRepository;
 import com.project.rest.repository.ZadaniaRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -32,6 +33,7 @@ public class ProjektServiceImpl implements ProjektService{
         return null;
     }
 
+    @Transactional
     @Override
     public void deleteProjekt(Integer projektId){
         for(Zadanie zadanie : zadanieRepository.findZadaniaProjektu(projektId)){

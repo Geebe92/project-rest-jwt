@@ -16,52 +16,48 @@ import java.net.URI;
 @RestController
 @RequestMapping("/api")
 public class ProjektRestController {
-    private ProjektService projektService; //serwis jest automatycznie wstrzykiwany poprzez konstruktor
+    private ProjektService projektService;
     @Autowired
     public ProjektRestController(ProjektService projektService) {
         this.projektService = projektService;
     }
 
-    // PRZED KAŻDĄ Z PONIŻSZYCH METOD JEST UMIESZCZONA ADNOTACJA (@GetMapping, PostMapping, ... ), KTÓRA OKREŚLA
-    // RODZAJ METODY HTTP, A TAKŻE ADRES I PARAMETRY ŻĄDANIA
-    //Przykład żądania wywołującego metodę: GET http://localhost:8080/api/projekty/1
     @GetMapping("/projekty/{projektId}")
-    ResponseEntity<Projekt> getProjekt(@PathVariable Integer projektId) {// @PathVariable oznacza, że wartość
-        return ResponseEntity.of(projektService.getProjekt(projektId)); // parametru przekazywana jest w ścieżce
+    ResponseEntity<Projekt> getProjekt(@PathVariable Integer projektId) {
+        return ResponseEntity.of(projektService.getProjekt(projektId));
     }
-    // @Valid włącza automatyczną walidację na podstawie adnotacji zawartych
-    // w modelu np. NotNull, Size, NotEmpty itd. (z jakarta.validation.constraints.*)
+
     @PostMapping(path = "/projekty")
-    ResponseEntity<Void> createProjekt(@Valid @RequestBody Projekt projekt) {// @RequestBody oznacza, że dane
-        // projektu (w formacie JSON) są
-        Projekt createdProjekt = projektService.setProjekt(projekt); // przekazywane w ciele żądania
-        URI location = ServletUriComponentsBuilder.fromCurrentRequest() // link wskazujący utworzony projekt
+    ResponseEntity<Void> createProjekt(@Valid @RequestBody Projekt projekt) {
+        Projekt createdProjekt = projektService.setProjekt(projekt);
+        URI location = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{projektId}").buildAndExpand(createdProjekt.getProjektId()).toUri();
-        return ResponseEntity.created(location).build(); // zwracany jest kod odpowiedzi 201 - Created
-    } // z linkiem location w nagłówku
+        return ResponseEntity.created(location).build();
+    }
+
     @PutMapping("/projekty/{projektId}")
     public ResponseEntity<Void> updateProjekt(@Valid @RequestBody Projekt projekt,
                                               @PathVariable Integer projektId) {
         return projektService.getProjekt(projektId)
                 .map(p -> {
                     projektService.setProjekt(projekt);
-                    return new ResponseEntity<Void>(HttpStatus.OK); // 200 (można też zwracać 204 - No content)
+                    return new ResponseEntity<Void>(HttpStatus.OK);
                 })
-                .orElseGet(() -> ResponseEntity.notFound().build()); // 404 - Not found
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
+
     @DeleteMapping("/projekty/{projektId}")
     public ResponseEntity<Void> deleteProjekt(@PathVariable Integer projektId) {
         return projektService.getProjekt(projektId).map(p -> {
             projektService.deleteProjekt(projektId);
-            return new ResponseEntity<Void>(HttpStatus.OK); // 200
-        }).orElseGet(() -> ResponseEntity.notFound().build()); // 404 - Not found
+            return new ResponseEntity<Void>(HttpStatus.OK);
+        }).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @GetMapping(value = "/projekty")
-    Page<Projekt> getProjekty(Pageable pageable) { // @RequestHeader HttpHeaders headers – jeżeli potrzebny
-        return projektService.getProjekty(pageable); // byłby nagłówek, wystarczy dodać drugą zmienną z adnotacją
+    Page<Projekt> getProjekty(Pageable pageable) {
+        return projektService.getProjekty(pageable);
     }
-
 
     @GetMapping(value = "/projekty", params="nazwa")
     Page<Projekt> getProjektyByNazwa(@RequestParam String nazwa, Pageable pageable) {
