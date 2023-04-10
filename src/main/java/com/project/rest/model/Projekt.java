@@ -29,7 +29,7 @@ public class Projekt {
 
     @CreationTimestamp
     @Column(name="dataczas_utworzenia", nullable = false, updatable = false)
-    private LocalDateTime dzataczasUtworzenia;
+    private LocalDateTime dataczasUtworzenia;
 
     @Column(name="data_oddania")
     private LocalDate dataOddania;
@@ -68,12 +68,12 @@ public class Projekt {
         this.opis = opis;
     }
 
-    public LocalDateTime getDzataczasUtworzenia() {
-        return dzataczasUtworzenia;
+    public LocalDateTime getDataczasUtworzenia() {
+        return dataczasUtworzenia;
     }
 
-    public void setDzataczasUtworzenia(LocalDateTime dzataczasUtworzenia) {
-        this.dzataczasUtworzenia = dzataczasUtworzenia;
+    public void setDataczasUtworzenia(LocalDateTime dataczasUtworzenia) {
+        this.dataczasUtworzenia = dataczasUtworzenia;
     }
 
     public LocalDate getDataOddania() {
@@ -97,4 +97,13 @@ public class Projekt {
         this.opis = opis;
         this.dataOddania = dataOddania;
     }
+
+    public Projekt(Integer projektId, String nazwa, String opis, LocalDateTime dataczasUtworzenia, LocalDate dataOddania) {
+        this.projektId = projektId;
+        this.nazwa = nazwa;
+        this.opis = opis;
+        this.dataczasUtworzenia = dataczasUtworzenia;
+        this.dataOddania = dataOddania;
+    }
+
 }

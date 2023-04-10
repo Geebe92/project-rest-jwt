@@ -3,7 +3,7 @@ package com.project.rest.service;
 import com.project.rest.model.Projekt;
 import com.project.rest.model.Zadanie;
 import com.project.rest.repository.ProjektRepository;
-import com.project.rest.repository.ZadaniaRepository;
+import com.project.rest.repository.ZadanieRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -15,10 +15,10 @@ import java.util.Optional;
 @Service
 public class ProjektServiceImpl implements ProjektService{
     private ProjektRepository projektRepository;
-    private ZadaniaRepository zadanieRepository;
+    private ZadanieRepository zadanieRepository;
 
     @Autowired
-    public ProjektServiceImpl(ProjektRepository projektRepository, ZadaniaRepository zadanieRepository){
+    public ProjektServiceImpl(ProjektRepository projektRepository, ZadanieRepository zadanieRepository){
         this.projektRepository = projektRepository;
         this.zadanieRepository = zadanieRepository;
     }
@@ -30,25 +30,26 @@ public class ProjektServiceImpl implements ProjektService{
 
     @Override
     public Projekt setProjekt(Projekt projekt){
-        return null;
+        projektRepository.save(projekt);
+        return projekt;
     }
 
-    @Transactional
     @Override
+    @Transactional
     public void deleteProjekt(Integer projektId){
         for(Zadanie zadanie : zadanieRepository.findZadaniaProjektu(projektId)){
-            zadanieRepository.delete((zadanie));
+            zadanieRepository.delete(zadanie);
         }
         projektRepository.deleteById(projektId);
     }
 
     @Override
     public Page<Projekt> getProjekty(Pageable pageable){
-        return null;
+        return projektRepository.findAll(pageable);
     }
 
     @Override
     public Page<Projekt> searchByNazwa(String nazwa, Pageable pageable){
-        return null;
+        return searchByNazwa(nazwa, pageable);
     }
 }
