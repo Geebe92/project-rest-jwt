@@ -91,4 +91,10 @@ public class Projekt {
         this.nazwa=nazwa;
         this.opis=opis;
     }
+
+    public Projekt(String nazwa, String opis, LocalDate dataOddania){
+        this.nazwa = nazwa;
+        this.opis = opis;
+        this.dataOddania = dataOddania;
+    }
 }
