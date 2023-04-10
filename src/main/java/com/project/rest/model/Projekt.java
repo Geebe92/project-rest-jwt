@@ -12,10 +12,10 @@ import java.util.List;
 import java.util.Set;
 
 @Entity
-@Table(name="projekt")
+@Table(name="projekty")
 public class Projekt {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     @Column(name="projekt_id")
     private Integer projektId;
 
@@ -36,7 +36,7 @@ public class Projekt {
 
     @OneToMany(mappedBy = "projekt")
     @JsonIgnoreProperties({"projekt"})
-    private List<Zadanie> zadanie;
+    private List<Zadanie> zadania;
 
     @ManyToMany
     @JoinTable(name = "projekt_student",
@@ -61,7 +61,7 @@ public class Projekt {
     }
 
     public String getOpis(){
-        return nazwa;
+        return opis;
     }
 
     public void setOpis(String opis) {

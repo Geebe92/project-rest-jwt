@@ -28,10 +28,13 @@ public class ProjektRestController {
     }
 
     @PostMapping(path = "/projekty")
-    ResponseEntity<Void> createProjekt(@Valid @RequestBody Projekt projekt) {
-        Projekt createdProjekt = projektService.setProjekt(projekt);
+    ResponseEntity<Void> createProjekt(@Valid @RequestBody Projekt projekt ){
+
+        Projekt createProjekt = projektService.setProjekt(projekt);
+
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
-                .path("/{projektId}").buildAndExpand(createdProjekt.getProjektId()).toUri();
+                .path("{projektId}").buildAndExpand(createProjekt.getProjektId()).toUri();
+
         return ResponseEntity.created(location).build();
     }
 
