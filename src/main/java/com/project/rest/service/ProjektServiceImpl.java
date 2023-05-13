@@ -16,24 +16,20 @@ import java.util.Optional;
 public class ProjektServiceImpl implements ProjektService{
     private ProjektRepository projektRepository;
     private ZadanieRepository zadanieRepository;
-
     @Autowired
     public ProjektServiceImpl(ProjektRepository projektRepository, ZadanieRepository zadanieRepository){
         this.projektRepository = projektRepository;
         this.zadanieRepository = zadanieRepository;
     }
-
     @Override
     public Optional<Projekt> getProjekt(Integer projektId){
         return projektRepository.findById(projektId);
     }
-
     @Override
     public Projekt setProjekt(Projekt projekt){
         projektRepository.save(projekt);
         return projekt;
     }
-
     @Override
     @Transactional
     public void deleteProjekt(Integer projektId){
@@ -42,12 +38,10 @@ public class ProjektServiceImpl implements ProjektService{
         }
         projektRepository.deleteById(projektId);
     }
-
     @Override
     public Page<Projekt> getProjekty(Pageable pageable){
         return projektRepository.findAll(pageable);
     }
-
     @Override
     public Page<Projekt> searchByNazwa(String nazwa, Pageable pageable){
         return searchByNazwa(nazwa, pageable);

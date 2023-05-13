@@ -10,5 +10,5 @@ import java.util.Optional;
 public interface StudentRepository extends JpaRepository<Student, Integer> {
     Optional<Student> findByNrIndeksu(String nrIndeksu);
     Page<Student> findByNrIndeksuStartsWith(String nrIndeksu, Pageable pageable);
-    Page<String > findByNazwiskoStartsWithIgnoreCase(String nazwisko, Pageable pageable);
+    Page<Student> findByNazwiskoStartsWithIgnoreCase(String nazwisko, Pageable pageable);
 }
