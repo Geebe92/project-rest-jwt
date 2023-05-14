@@ -42,7 +42,10 @@ public class StudentServiceImpl implements StudentService{
     public Page<Student> getStudent(Pageable pageable) {
         return studentRepository.findAll(pageable);
     }
-
+    @Override
+    public Optional<Student> searchByEmail (String email){
+        return studentRepository.findByEmail(email);
+    }
     @Override
     public Page<Student> searchByImie(String imie, Pageable pageable) {
         return studentRepository.findByNazwiskoStartsWithIgnoreCase(imie, pageable);

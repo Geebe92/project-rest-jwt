@@ -13,5 +13,6 @@ public interface StudentService {
     void deleteStudent(Integer studentId);
     Page<Student> getStudent(Pageable pageable);
     Page<Student> searchByImie(String imie, Pageable pageable);
+    Optional<Student> searchByEmail(String email);
 
 }

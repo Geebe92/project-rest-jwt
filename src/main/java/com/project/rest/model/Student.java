@@ -2,6 +2,7 @@ package com.project.rest.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 
 import java.util.Set;
 
@@ -19,6 +20,7 @@ public class Student {
     @Column(name="student_id")
     private Integer studentId;
 
+    @NotNull("")
     @Column(length = 50, nullable = false)
     private String imie;
 
