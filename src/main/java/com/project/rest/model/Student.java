@@ -1,7 +1,10 @@
 package com.project.rest.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import io.micrometer.common.util.internal.logging.InternalLogger;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 
 import java.util.Set;
@@ -20,7 +23,17 @@ public class Student {
     @Column(name="student_id")
     private Integer studentId;
 
-    @NotNull("")
+    @NotNull(message = "Brak podanego adresu email")
+    @Email(message = "Niepoprawny format adresu email")
+    @Column(unique = true, length = 50, nullable = false)
+    private String email;
+
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private String password;
+
+    @Enumerated(EnumType.STRING)
+    private Role role;
+
     @Column(length = 50, nullable = false)
     private String imie;
 
@@ -30,8 +43,6 @@ public class Student {
     @Column(name = "nr_indeksu", length = 20, unique = true, nullable = false)
     private String nrIndeksu;
 
-    @Column(length = 50, unique = true, nullable = false)
-    private String email;
 
     @Column(nullable = false)
     private Boolean stacjonarny;
@@ -76,6 +87,22 @@ public class Student {
         return email;
     }
 
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
+    public String getRole{
+        return role;
+    }
+
     public Boolean getStacjonarny() {
         return stacjonarny;
     }
@@ -109,4 +136,6 @@ public class Student {
         this.email = email;
         this.stacjonarny = stacjonarny;
     }
+
+
 }

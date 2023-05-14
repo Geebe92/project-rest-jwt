@@ -1,4 +1,5 @@
 package com.project.rest.model;
 
-public class Role {
+public enum Role {
+    USER, ADMIN
 }
